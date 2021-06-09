@@ -47,9 +47,13 @@ export default function Home(): JSX.Element {
     return data?.pages.map(page => page.data).flat();
   }, [data]);
 
-  // TODO RENDER LOADING SCREEN
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  // TODO RENDER ERROR SCREEN
+  if (isError) {
+    return <Error />;
+  }
 
   return (
     <>
