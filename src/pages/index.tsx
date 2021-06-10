@@ -23,7 +23,7 @@ type Pages = {
 
 export default function Home(): JSX.Element {
   const getImages = async ({ pageParam = null }): Promise<Pages> => {
-    const { data } = await api.get('/images', {
+    const { data } = await api.get('images', {
       params: {
         after: pageParam,
       },
