@@ -7,6 +7,12 @@ import { api } from '../../services/api';
 import { FileInput } from '../Input/FileInput';
 import { TextInput } from '../Input/TextInput';
 
+interface FormValues {
+  image: FileList;
+  title: string;
+  description: string;
+}
+
 interface FormAddImageProps {
   closeModal: () => void;
 }
@@ -62,7 +68,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
     useForm();
   const { errors } = formState;
 
-  const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
+  const onSubmit = async (data: FormValues): Promise<void> => {
     try {
       if (!imageUrl) {
         toast({
@@ -75,7 +81,11 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
         });
       }
 
-      const response = await mutation.mutateAsync(data);
+      const response = await mutation.mutateAsync({
+        description: data.description,
+        title: data.title,
+        url: imageUrl,
+      });
 
       if (response.status === 201) {
         toast({
